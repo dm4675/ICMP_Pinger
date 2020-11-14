@@ -5,7 +5,7 @@ import struct
 import time
 import select
 import binascii
-#from statistics import stdev
+
 
 
 ICMP_ECHO_REQUEST = 8
