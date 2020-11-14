@@ -1,4 +1,5 @@
 from socket import *
+from statistics import stdev
 import os
 import sys
 import struct
