@@ -5,8 +5,8 @@ import struct
 import time
 import select
 import binascii
-from statistics import stdev
-# Should use stdev
+#from statistics import stdev
+
 
 ICMP_ECHO_REQUEST = 8
 
@@ -52,12 +52,12 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         
         # Fetch the ICMP header from the IP packet
         icmpHeader = recPacket[20:28]
-        ICtype, ICcode, ICchecksum, ICid, ICsequence = struct.unpack('bbHHh', icmpHeader)
+        icmpType, code, checksum, packetID, sequence = struct.unpack('bbHHh', icmpHeader)
 
-        if ICid == ID:
+        if packetID == ID:
             bytesDouble = struct.calcsize('d')
-            timeOf = struct.unpack('d', recPacket[28:28 + bytesDouble])[0]
-            rtt = timeReceived - timeOf
+            timeSent = struct.unpack('d', recPacket[28:28 + bytesDouble])[0]
+            rtt = timeReceived - timeSent
             return rtt * 1000
 
 
@@ -126,7 +126,7 @@ def ping(host, timeout=1):
         if delay != "Request timed out.":
             values.append(delay)
         print(delay)
-        time.sleep(1)  # one second
+        time.sleep(1)  
 
     if len(values) > 0:
         packet_min = min(values)
@@ -136,10 +136,7 @@ def ping(host, timeout=1):
         vars = [str(round(packet_min, 2)), str(round(packet_avg, 2)), str(round(packet_max, 2)), str(round(stdev_var, 2))]
     else:
         vars = ['0', '0.0', '0', '0.0']
-
-    print(vars)
     return vars
 
 if __name__ == '__main__':
-    #ping("google.co.il")
     ping("74.6.231.21")
