@@ -1,3 +1,5 @@
+# Online Python compiler (interpreter) to run Python online.
+# Write Python 3 code in this online editor and run it.
 from socket import *
 import os
 import sys
@@ -58,11 +60,11 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
 			timeSent = struct.unpack("d", recPacket[28:28 + byte])[0]
 			rtt = timeReceived - timeSent
             return rtt * 1000
-			#return "Reply from %s: bytes=%d time=%f5ms TTL=%d" % (destAddr, len(recPacket), (timeReceived - timeSent)*1000, TTL)
+			
 		
 		timeLeft = timeLeft - howLongInSelect
 		if timeLeft <= 0:
-			return "Request timed out."
+	        return "Request timed out."
 
 	
 def sendOnePing(mySocket, destAddr, ID):
